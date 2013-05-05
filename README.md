@@ -14,5 +14,5 @@ O(n) worst-casespace, and O(1) worst-case query time.
 * first level: hash n keys into m slots.
 * second level: for each slot build a new array with size n^2 and hash with no collisions (p>0.5)
 
-Universal Hash used:
-h(k) = ((ak + b) mod p) mod m
+**Universal Hash used:
+h(k) = ((ak + b) mod p) mod m**
