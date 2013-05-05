@@ -1,7 +1,7 @@
 FKS
 ===
 
-# perfect-hash
+# Perfect Hash
 We say a hash function is perfect for S if all lookups involve O(1) work.
 
 # FKS (Fredman, Komlos and Szemeredi)
