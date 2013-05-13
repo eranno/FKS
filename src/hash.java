@@ -14,9 +14,9 @@ public class hash {
 	private int collision;	//collisions counter
 	
 	
-	public hash(int[] K, int m, int a, int b, int p) {
+	public hash(int[] K, int a, int b, int p) {
 		this.K = K;
-		this.m = m;
+		this.m = K.length;
 		this.a = a;
 		this.b = b;
 		this.p = p;
@@ -106,6 +106,42 @@ public class hash {
 		}
 	}
 	
+	public int[] getK() {
+		return K;
+	}
+
+	public void setK(int[] k) {
+		K = k;
+	}
+
+	public int getM() {
+		return m;
+	}
+
+	public void setM(int m) {
+		this.m = m;
+	}
+
+	public int getA() {
+		return a;
+	}
+
+	public void setA(int a) {
+		this.a = a;
+	}
+
+	public int getB() {
+		return b;
+	}
+
+	public void setB(int b) {
+		this.b = b;
+	}
+
+	public void setCollision(int collision) {
+		this.collision = collision;
+	}
+
 	//get & set
 	public int getCollision() {return collision;}
 	

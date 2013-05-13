@@ -1,31 +1,69 @@
-import java.util.Arrays;
-
-
 public class perfect {
 
 	public static void main(String[] args) {
 
-		//example
+		
 		int[] K = {10, 22, 37, 40, 52, 60, 70, 72, 75};
 		int m = 9;
 		int a = 3;
 		int b = 42;
-		int p = 59999;  //10007;
+		int p = 101;
+		hash h;
+
 		
-		
-		//random
+		//randomize
 		p = 2147483647;	//maximum value of 32 bit || Integer.MAX_VALUE || and it's a prime!
-		m = 100;
-		K = getRandomArr(1, 1000, p, m);
-		a = random(1, p-1);	//a
-		b = random(0, p-1);	//b
+		int avgCol=0, maxCol=0, minCol=-1, avgRun=0;
+		long maxRun=0, minRun=-1;
+		int s = 1000;
+		long startTime, endTime, runTime;
+		for (int i=0; i<s; i++)
+		{
+			
+			m = random(1000, 10000);
+			K = getRandomArr(1, 1000, p, m);
+			a = random(1, p-1);	//a
+			b = random(0, p-1);	//b
+			
+			h = new hash(K, a, b, p);
+			startTime = System.currentTimeMillis();	//System.nanoTime(); //
+			h.run();
+			endTime = System.currentTimeMillis();	//System.nanoTime(); //
+			runTime = Math.abs(endTime - startTime);
+			
+			
+			//statistics
+			avgCol += h.getCollision();
+			avgRun += runTime;
+			
+			if (runTime > maxRun)
+				maxRun = runTime;
+			
+			if (minRun<0 || runTime < minRun)
+				minRun = runTime;
+			
+			if (h.getCollision() > maxCol)
+				maxCol = h.getCollision();
+			
+			if (minCol<0 || h.getCollision() < minCol)
+				minCol = h.getCollision();
+			
+			
+			//System.out.println(runTime);
+			//System.out.println(h.toString());
+			//System.out.println(h.getDetailedCollision());
+			//System.out.println("Total collisions: " + h.getCollision());
+		}
 		
-		hash h = new hash(K, m, a, b, p);
-		h.run();
-		//System.out.println(h.toString());
-		//System.out.println(h.getDetailedCollision());
-		System.out.println("Total collisions: " + h.getCollision());
-		
+		//print statistics results
+		System.out.println("Collisions:");
+		System.out.println("- Min: " + minCol);
+		System.out.println("- Max: " + maxCol);
+		System.out.println("- Average: " + avgCol/s);
+		System.out.println("\nrun time:");
+		System.out.println("- Min: " + minRun);
+		System.out.println("- Max: " + maxRun);
+		System.out.println("- Average: " + avgRun/s);
 		
 	}
 	
