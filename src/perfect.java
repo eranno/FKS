@@ -15,12 +15,11 @@ public class perfect {
 		p = 2147483647;	//maximum value of 32 bit || Integer.MAX_VALUE || and it's a prime!
 		int avgCol=0, maxCol=0, minCol=-1, avgRun=0;
 		long maxRun=0, minRun=-1;
-		int s = 1000;
+		int s = 100;
 		long startTime, endTime, runTime;
 		for (int i=0; i<s; i++)
 		{
-			
-			m = random(1000, 10000);
+			m = random(10000, 100000);
 			K = getRandomArr(1, 1000, p, m);
 			a = random(1, p-1);	//a
 			b = random(0, p-1);	//b
@@ -56,11 +55,14 @@ public class perfect {
 		}
 		
 		//print statistics results
+		System.out.println("Statics calculate with "+s+" arrays\n");
 		System.out.println("Collisions:");
+		System.out.println("- Total: " + avgCol);
 		System.out.println("- Min: " + minCol);
 		System.out.println("- Max: " + maxCol);
 		System.out.println("- Average: " + avgCol/s);
-		System.out.println("\nrun time:");
+		System.out.println("\nrun time (ms):");
+		System.out.println("- Total: " + avgRun);
 		System.out.println("- Min: " + minRun);
 		System.out.println("- Max: " + maxRun);
 		System.out.println("- Average: " + avgRun/s);
