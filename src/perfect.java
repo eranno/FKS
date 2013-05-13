@@ -5,45 +5,49 @@ public class perfect {
 
 	public static void main(String[] args) {
 
-		
+		//example
 		int[] K = {10, 22, 37, 40, 52, 60, 70, 72, 75};
 		int m = 9;
 		int a = 3;
 		int b = 42;
-		int p = 101;
+		int p = 59999;  //10007;
 		
-		K = getRandomArr();
-		m = K.length;
+		
+		//random
+		p = 2147483647;	//maximum value of 32 bit || Integer.MAX_VALUE || and it's a prime!
+		m = 100;
+		K = getRandomArr(1, 1000, p, m);
+		a = random(1, p-1);	//a
+		b = random(0, p-1);	//b
+		
 		hash h = new hash(K, m, a, b, p);
 		h.run();
 		//System.out.println(h.toString());
-		System.out.println(h.getDetailedCollision());
+		//System.out.println(h.getDetailedCollision());
 		System.out.println("Total collisions: " + h.getCollision());
+		
+		
 	}
 	
 
 	
 	
-	static int[] getRandomArr() {
-		int m = 10;//random(1, 100);
-		int[] arr = new int[m];
-		int min = 1000000;
-		int max = 10000000;
-		for (int i=0; i<m; i++)
+	static int[] getRandomArr(int min, int max, int prime, int len) {
+		int[] arr = new int[len];
+		int step = 0;
+		for (int i=0; i<len; i++)
 		{
-			int t = random(min, max);
-			//while ( !(Arrays.binarySearch(arr, t)>=0) )
-			//	t = random(min, max);
+			if (step > prime + max)
+				step = 0;
 			
-			arr[i] = t;
+			int t = random(min, max);
+			step += t;
+			arr[i] = prime - step;
 		}
+
 		return arr;
 	}
 	
-	
-	
-
-
 	
 	static void h1() {
 		int m = 101;	//prime

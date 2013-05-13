@@ -58,16 +58,20 @@ public class hash {
 			
 			//check if there are collisions
 			boolean inner_col = false;
-			while ( (inner_col) || (T[ index ][1][ h(K[k], T[index][0][1], T[index][0][2], p, T[index][0][0]) ] > 0) )
+			int h = h(K[k], T[index][0][1], T[index][0][2], p, T[index][0][0]);
+			int val = T[index][1][h];
+			while ( (inner_col) || (val > 0 && val != K[k]) )
 			{
+				inner_col = false;	//reset inner collision in case there were already an inner collision
+				
 				//collision found
 				t[index][1]++;	//count it per cell
-				collision++;	//count it
-				
+				collision++;	//count it as total
+
 				//reRandomize a & b to this cell
 				T[index][0][1] = random(1, p-1);	//a
-				T[index][0][2] = random(1, p-1);	//b
-				
+				T[index][0][2] = random(0, p-1);	//b
+
 				//reHash them (only the items we hashed in this cell)
 				int[] sec = new int[ T[index][0][0] ];
 				for (int i=0; i<T[index][0][0]; i++)
@@ -76,22 +80,27 @@ public class hash {
 					
 					//if key hashed then reHash it
 					if ( T[index][1][i] > 0 ) {
-						if (sec[ h(T[index][1][i], T[index][0][1], T[index][0][2], p, T[index][0][0]) ] > 0)
+						int inner_index = h(T[index][1][i], T[index][0][1], T[index][0][2], p, T[index][0][0]);
+						if (sec[inner_index] > 0)
 						{	//...LOOP
 							inner_col = true;
 							break;
 						}
 						
-						sec[ h(T[index][1][i], T[index][0][1], T[index][0][2], p, T[index][0][0]) ] = T[index][1][i];	
+						sec[inner_index] = T[index][1][i];	
 					}
 				}
-				
+
 				//if no collisions then update the array and continue
 				if (!inner_col) T[index][1] = sec;
+
+				//update val
+				h = h(K[k], T[index][0][1], T[index][0][2], p, T[index][0][0]);
+				val = T[index][1][h];
 			}
 			
 			//System.out.print(T[ index ][1][ h(K[k], T[index][0][1], T[index][0][2], p, T[index][0][0]) ] + " - ");
-			T[ index ][1][ h(K[k], T[index][0][1], T[index][0][2], p, T[index][0][0]) ] = K[k];
+			T[index][1][ h(K[k], T[index][0][1], T[index][0][2], p, T[index][0][0]) ] = K[k];
 			//System.out.println(T[ index ][1][ h(K[k], T[index][0][1], T[index][0][2], p, T[index][0][0]) ]);
 
 		}
@@ -135,11 +144,14 @@ public class hash {
 	
 	
 	private int random(int min, int max){
-		return min + (int)(Math.random() * ((max - min) + 1));
+		
+		return min + (int)(Math.random() * ((max - min) + 1));		
 	}
 	
 	private int h(int k, int a, int b, int p, int m) {
-		return ((a*k + b) % p) % m;
+		//mult must be long otherwise it will get overflow
+		long mult = (long)a*(long)k;
+		return ((int)((mult + b) % p)) % m;
 	}
 	
 	
