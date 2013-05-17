@@ -11,7 +11,10 @@ public class hash {
 	private int[][] t;		//double to save collision per cell
 	private int[][][] T;	//result jagged array
 	
+	//statistics values
 	private int collision;	//collisions counter
+	private int totalSize;	//total table size
+	private double minCol, maxCol, avgCol;
 	
 	
 	public hash(int[] K, int a, int b, int p) {
@@ -22,6 +25,10 @@ public class hash {
 		this.p = p;
 		
 		collision = 0;
+		totalSize = 0;
+		minCol = -1;
+		maxCol = -1;
+		avgCol = -1;
 	}
 	
 	public void run() {
@@ -46,6 +53,8 @@ public class hash {
 				T[j][0][1] = random(1, p-1);		//a
 				T[j][0][2] = random(1, p-1);		//b
 				T[j][1] = new int[ T[j][0][0] ];	//array
+				
+				totalSize += T[j][0][0];			//save total size
 			}
 		}
 
@@ -102,7 +111,6 @@ public class hash {
 			//System.out.print(T[ index ][1][ h(K[k], T[index][0][1], T[index][0][2], p, T[index][0][0]) ] + " - ");
 			T[index][1][ h(K[k], T[index][0][1], T[index][0][2], p, T[index][0][0]) ] = K[k];
 			//System.out.println(T[ index ][1][ h(K[k], T[index][0][1], T[index][0][2], p, T[index][0][0]) ]);
-
 		}
 	}
 	
@@ -144,6 +152,31 @@ public class hash {
 
 	//get & set
 	public int getCollision() {return collision;}
+	public int getTotalSize() {return totalSize;}
+	public double getMinCol() {return minCol;}
+	public double getMaxCol() {return maxCol;}
+	public double getAvgCol() {return avgCol;}
+	
+	
+	//count collisions
+	public void collisionsStats()
+	{
+		int f = 0;
+		for (int k=0; k<m; k++)
+		{
+			if (t[k][0] > 0 && t[k][1] > 0)
+			{
+				f++;
+				
+				if (t[k][1] > maxCol)
+					maxCol = t[k][1];
+				
+				if (minCol<0 || t[k][1] < minCol)
+					minCol = t[k][1];
+			}
+		}
+		avgCol = collision/f;
+	}
 	
 	public String getDetailedCollision()
 	{
