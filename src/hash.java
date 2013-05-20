@@ -175,7 +175,7 @@ public class hash {
 					minCol = t[k][1];
 			}
 		}
-		avgCol = collision/f;
+		avgCol = (double)collision/f;
 	}
 	
 	public String getDetailedCollision()

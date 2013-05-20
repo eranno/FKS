@@ -18,11 +18,11 @@ public class perfect {
 		long maxRun=0, minRun=-1;
 		long startTime, endTime, runTime;
 		int s = 100;
-		p = 95009;//2147483647;	//maximum value of 32 bit || Integer.MAX_VALUE || and it's a prime!
+		p =  950023;//2147483647;	//maximum value of 32 bit || Integer.MAX_VALUE || and it's a prime!
 		for (int i=0; i<s; i++)
 		{
 			m = 10000;//random(10000, 10000);			//array size
-			K = getRandomArr(1, 2, p, m);
+			K = getRandomArr(1, 10, p, m);
 			a = random(1, p-1);	//a
 			b = random(0, p-1);	//b
 
@@ -69,7 +69,7 @@ public class perfect {
 		}
 		
 		//print statistics results
-		System.out.println("Statics calculate with "+s+" array(s)\n");
+		System.out.println("Statistics calculate with "+s+" array(s)\n");
 		System.out.println("Collisions:");
 		System.out.println("- Total: " + avgCol);
 		System.out.println("- Min: " + minCol);
